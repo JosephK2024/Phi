@@ -26,7 +26,6 @@ public class Shell extends JFrame{
     JMenuItem item;
     
     
-    
     /**
      * Create and display a JFrame window
      */
