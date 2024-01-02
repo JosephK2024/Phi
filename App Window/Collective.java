@@ -1,4 +1,5 @@
 public class Collective {
+    //TODO: figure out if collective is necessary (it shouldn't be theoreitcally but it might be an easier way to store children data and sending info to parents)
     Shell[] children;
     Shell mainWindow;
     public Collective(){

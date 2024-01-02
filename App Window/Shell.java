@@ -31,6 +31,7 @@ public class Shell extends JFrame{
      * Create and display a JFrame window
      */
     private JFrame makeShell(String title) {
+        //TODO: clean this up (maybe make this a main file in collective as a exception to the format??? or keep seperate from use normally???)
         // Create window
         JFrame frame = new JFrame(title);
         
@@ -39,11 +40,12 @@ public class Shell extends JFrame{
         Dimension minSize = new Dimension(500, 500); //TODO: create new method with Dimension Input
         frame.setMinimumSize(minSize);
             //text
-        JLabel textLabel = new JLabel("LABEL", SwingConstants.CENTER);//TODO: Create new method with object in it
+        JLabel textLabel = new JLabel("LABEL", SwingConstants.CENTER);//TODO: Create new method with objects in it
         frame.getContentPane().add(textLabel, BorderLayout.NORTH);
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
             // menu
+            //TODO: figure out menu bar
         menuBar = new JMenuBar();
         menu1 = new JMenu("menu 1");
         menu1.setMnemonic(KeyEvent.VK_A);
@@ -65,8 +67,9 @@ public class Shell extends JFrame{
         frame.setVisible(true);
         frame.setAlwaysOnTop(true);// always true
         return frame;
-
     }
+
+    // TODO: find out how to procedurally close each Jframe with a button in menu
     
     /**
      * Dispose of all children this Window has
@@ -81,10 +84,10 @@ public class Shell extends JFrame{
      * Dispose this Window 
      */
     public void close(){
+        System.out.println("Found Close Function");
         if (hasChildren){
             closeChildren();
         }
-        this.dispose();
         if(!this.hasParent){
             System.exit(0);
         }
@@ -162,5 +165,14 @@ public class Shell extends JFrame{
     public void changeParent(Shell parent){
         this.parent = parent;
         this.hasParent = true;
+    }
+
+    //SHOULD work for non-emulator (non-chromebook) disposal
+    //TODO: test dispose with Desktop
+    @Override
+    public void dispose(){
+        System.out.println("Acheived Dispose Override");
+          close();
+          super.dispose();
     }
 }
