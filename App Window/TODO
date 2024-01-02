@@ -1,0 +1,7 @@
+- Collective
+    - Window to window relationships
+    - Store child window data in parent window
+    
+- Window
+    - When parent closes close child
+        DONT CLOSE PARENT WHEN CHILD CLOSES
