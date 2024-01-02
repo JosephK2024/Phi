@@ -24,7 +24,7 @@ public class Shell extends JFrame{
     JMenuBar menuBar;
     JMenu menu1;
     JMenuItem item;
-    int[] ger = new int[2];
+    
     
     
     /**
