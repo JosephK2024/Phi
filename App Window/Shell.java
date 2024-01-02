@@ -26,7 +26,6 @@ public class Shell extends JFrame{
     JMenuItem item;
     
     
-    
     /**
      * Create and display a JFrame window
      */
@@ -166,7 +165,6 @@ public class Shell extends JFrame{
         this.parent = parent;
         this.hasParent = true;
     }
-
     //SHOULD work for non-emulator (non-chromebook) disposal
     //TODO: test dispose with Desktop
     @Override
