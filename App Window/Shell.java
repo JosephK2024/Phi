@@ -1,176 +1,107 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import javax.swing.*;//For JFrame access
 
-import javax.swing.*;
-
-
-/**
- * A window with any number of modifications based on windowType and manual inputs 
- */
 public class Shell extends JFrame{
-    // Basic
-    JFrame shell;
-    windowType windowType;
-    boolean open = true;
-
-    // Ancestry
-    Shell children[];
-    boolean hasChildren = false;
+    //Ancestry
+    Shell[] children;
     Shell parent;
-    boolean hasParent = false;
 
-    // Menu
-    JMenuBar menuBar;
-    JMenu menu1;
-    JMenuItem item;
-    
-    
+
     /**
-     * Create and display a JFrame window
+     * Constructors
+     * 
      */
-    private JFrame makeShell(String title) {
-        //TODO: clean this up (maybe make this a main file in collective as a exception to the format??? or keep seperate from use normally???)
-        // Create window
-        JFrame frame = new JFrame(title);
+
+    /**
+     * Constructs a Shell with nothing
+     */
+    public Shell(){
+        super();
         
-        // Set up window
-            // minimum size
-        Dimension minSize = new Dimension(500, 500); //TODO: create new method with Dimension Input
-        frame.setMinimumSize(minSize);
-            //text
-        JLabel textLabel = new JLabel("LABEL", SwingConstants.CENTER);//TODO: Create new method with objects in it
-        frame.getContentPane().add(textLabel, BorderLayout.NORTH);
-        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
-            // menu
-            //TODO: figure out menu bar
-        menuBar = new JMenuBar();
-        menu1 = new JMenu("menu 1");
-        menu1.setMnemonic(KeyEvent.VK_A);
-        menu1.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
-        menuBar.add(menu1);
-        item = new JMenuItem("exit", KeyEvent.VK_T);
-        //item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        item.getAccessibleContext().setAccessibleDescription("doesn't really do anything");
-        menu1.add(item);
-
-        frame.setJMenuBar(menuBar);
-        
-
-         
-
-        // Display window
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setAlwaysOnTop(true);// always true
-        return frame;
-    }
-
-    // TODO: find out how to procedurally close each Jframe with a button in menu
-    
-    /**
-     * Dispose of all children this Window has
-     */
-    private void closeChildren(){
-        for(int childNum = 0; childNum < this.children.length; childNum++){
-            this.children[childNum].close();
-        }
+        this.children = null;
+        this.parent = null;
     }
 
     /**
-     * Dispose this Window 
-     */
-    public void close(){
-        System.out.println("Found Close Function");
-        if (hasChildren){
-            closeChildren();
-        }
-        if(!this.hasParent){
-            System.exit(0);
-        }
-    }
-
-    /**
-     * Hide the children of this Window
-     */
-    private void hideChildren(){
-        for(int childNum = 0; childNum < this.children.length; childNum++){
-            this.children[childNum].hide();
-        }
-    }
-
-    /**
-     * Hide this Window and store it's information on the parent window
-     */
-    public void hide(){
-        if(hasChildren){
-            hideChildren();
-        }
-        this.setVisible(false);
-        this.open = false;
-        
-    }
-
-    /**
-     * Create a window
-     */
-    public Shell(String title, Shell parentShell){
-        this.shell = makeShell(title);
-        this.parent = parentShell;
-        hasParent = true;
-    }
-    
-    /**
-     * Create parentless window 
+     * Constructs a {code @Shell} with with a title
+     * @param title     title of Shell created
      */
     public Shell(String title){
-        this.shell = makeShell(title);
+        super(title);
+
+        init(null, null);
     }
 
     /**
-     * Create the main window
+     * Constructs a {code @Shell} with a starting inheritance of children Shells
+     * @param children      children Shells
      */
-    public Shell(windowType windowType){
-        //TODO: Main window interface
-        switch(windowType) {
-            //TODO: give each window properties of its windowType
-        }
-        this.windowType = windowType;
-        // placeholder
-        this.shell = makeShell("placeholder");
+    public Shell(Shell[] children){
+        super();
+
+        init(children, null);
     }
 
+    /**
+     * Constructs a {code @Shell} with a starting inheritance of a parent Shell
+     * @param parent
+     */
+    public Shell(Shell parent){
+        super();
 
-    public void addChild(Shell child){
-        Shell[] storedShells;
-        if(hasChildren){
-            storedShells = new Shell[children.length + 1];
-            for (int shellNum = 0; shellNum <= this.children.length; shellNum++){
-                storedShells[shellNum] = this.children[shellNum];
-            } 
-            storedShells[storedShells.length] = child;
-        }
-        else{
-            storedShells = new Shell[1];
-            storedShells[0] = child; 
-        }
-        children = storedShells;
-        child.changeParent(this);
-        hasChildren = true;
+        init(null, parent);
     }
 
-    public void changeParent(Shell parent){
+    /**
+     * Constructs a {code @Shell} with
+     * a starting inheritance of children Shells
+     * and
+     * a title
+     * @param title
+     * @param children
+     */
+    public Shell(String title, Shell[] children){
+        super(title);
+
+        init(children, null);
+    }
+
+    /**
+     * Constructs a {code @Shell} with
+     * 
+     * @param title
+     * @param parent
+     */
+    public Shell(String title, Shell parent){
+        super(title);
+        
+        init(null, parent);
+    }
+
+    /**
+     * 
+     * @param children
+     * @param parent
+     */
+    public Shell(Shell[] children, Shell parent){
+        super();
+
+        init(children, parent);
+    }
+
+    /**
+     * 
+     * @param title
+     * @param children
+     * @param parent
+     */
+    public Shell(String title, Shell[] children, Shell parent){
+        super(title);
+
+        init(children, parent);
+    }
+
+    private void init(Shell[] children, Shell parent){
+        this.children = children;
         this.parent = parent;
-        this.hasParent = true;
-    }
-    //SHOULD work for non-emulator (non-chromebook) disposal
-    //TODO: test dispose with Desktop
-    @Override
-    public void dispose(){
-        System.out.println("Acheived Dispose Override");
-          close();
-          super.dispose();
     }
 }
