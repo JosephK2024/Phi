@@ -1,9 +1,9 @@
+@Deprecated
 public class Collective {
-    //TODO: figure out if collective is necessary (it shouldn't be theoreitcally but it might be an easier way to store children data and sending info to parents)
     Shell[] children;
     Shell mainWindow;
     public Collective(){
-        Shell mainWindow = new Shell("parent"); 
+        //Shell mainWindow = new Shell("parent"); 
     }
 
     /**
@@ -14,7 +14,7 @@ public class Collective {
         Shell newWindow = new Shell(title);
 
         addWindow(newWindow);    
-        mainWindow.addChild(newWindow);
+        //mainWindow.addChild(newWindow);
     }
 
     /**

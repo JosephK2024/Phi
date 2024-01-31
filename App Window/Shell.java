@@ -1,10 +1,11 @@
 import javax.swing.*;//For JFrame access
 
 /**
- * A JFrame extension with added Ancestry and connections
+ * A JFrame extension with added Ancestry and connections 
  * @author JK
  * @version U.1
  */
+@Deprecated
 public class Shell extends JFrame{
     //Ancestry
     Shell[] children;
