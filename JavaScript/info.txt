@@ -1,0 +1,9 @@
+Attempting to learn how to use JavaScript to do multi-platform
+    First need to learn file extension
+        .js
+    Second learn how to run js files
+        Requires html?
+
+Might be a good idea to switch from Java and JavaScript for an easier time for me
+    no it wont, would require a Java interpereter
+        linux would hate it along with mobile

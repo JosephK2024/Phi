@@ -2,7 +2,6 @@ import java.awt.*;
 public class Test {
     public static void main(String args[]){
         // Attempt to create non-rectangle windows (hard to figure out)
-        System.out.println("Hello?");
         Frame wn = new Frame();
         System.out.print(wn.getBounds());
         wn.setBounds(0, 0, 1000, 1000);
