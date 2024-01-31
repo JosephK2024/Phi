@@ -1,17 +1,19 @@
+import java.awt.*;
 public class Test {
-    public static void main(String[] args){
-        Shell childWindow = new Shell("child");
-        //int[] testArray = new int[3];
-        //System.out.println(testArray.length); 
-        //for (int i = 0; i < testArray.length; i++){
-        //    System.out.println(i);
-        //}
+    public static void main(String args[]){
+        // Attempt to create non-rectangle windows (hard to figure out)
+        System.out.println("Hello?");
+        Frame wn = new Frame();
+        System.out.print(wn.getBounds());
+        wn.setBounds(0, 0, 1000, 1000);
+        System.out.print(wn.getBounds());
+        wn.setVisible(true);
+        System.out.print(wn.getShape());
+        // cant figure out how to use shape
 
-        Shell mainWindow = new Shell("main");
 
-        mainWindow.addChild(childWindow);
-
-        //childWindow.addChild(mainWindow);
-
+        // Might be best to just use one window for the application instead of stretching between more
+        // Could use boxes to create connections inside single window with clickable "links" that expand when touched/hovered to show more info
+        // See app "Obsidian"
     }
 }
