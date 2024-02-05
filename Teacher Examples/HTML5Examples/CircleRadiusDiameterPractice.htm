@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://sites.google.com/site/math2share/students -->
+<html>
+<head>
+
+</head>
+
+<body>
+
+<canvas id="CANVAS1" width="800" height="560" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+<br>
+<canvas id="CANVAS2" width="650" height="80" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<table style="float: left;">
+  <tr>
+  <td>
+    <input type="button" value="Draw" class="draw"     onClick="draw_random_circle();" style="font-size:150%;font-weight:bold;" /><br>
+    <input type="button" value="Answer" class="answer" onClick="update_answer_box();" style="font-size:150%;font-weight:bold;" />
+  </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+//
+//Javascript to randomly draw a circle with diameter
+// and radius to quiz students
+// 
+//
+
+//Initialize Global Constants and Variables
+var LINE_WIDTH = "2"; //pixel width of lines
+var AnswerString = "";
+
+//Initialize Canvases
+var CANVAS1 = document.getElementById("CANVAS1");
+var C1XMAX = CANVAS1.width; //width of CANVAS1
+var C1YMAX = CANVAS1.height; //height of CANVAS1
+var C1CTX = CANVAS1.getContext("2d");
+var CANVAS2 = document.getElementById("CANVAS2");
+var C2XMAX = CANVAS2.width; //width of CANVAS2
+var C2YMAX = CANVAS2.height; //height of CANVAS2
+var C2CTX = CANVAS2.getContext("2d");
+
+//Move over CANVAS2 to the right
+CANVAS2.style.position="absolute";
+var canvasoffset = CANVAS1.width - CANVAS2.width + 8;
+CANVAS2.style.left= canvasoffset.toString() + "px";
+
+//
+// Javascript Function Definitions:
+//
+
+function randomize_labels( labels )
+// Function to randomize a given array of labels.
+{
+    
+    var tempval = "";
+    var len_labels = labels.length;
+    var ranNum = 0;
+    //Randomly switch index values within a loop
+    for (var i=0; i<len_labels; i++)
+    {
+        for (var j=0; j<=len_labels-1; j++)
+        {
+           ranNum = Math.floor(Math.random()*len_labels);
+           tempval = labels[j];
+           labels[j] = labels[ranNum];
+           labels[ranNum] = tempval;
+        }
+    }
+    return labels;
+
+} //end randomize_labels
+
+function random_angle( maxAngle )
+// Function to randomly generate an angle.
+// Angle is in radians from 0 to maxAngle.
+// If argument in not given, maxAngle is assumed to be pi
+{
+    
+    //Set up maxAngle if not given as argument
+    if(!maxAngle)
+    {
+        var maxAngle = Math.PI;
+    }
+    
+    var ranAngle = Math.random() * maxAngle;
+    return ranAngle;
+
+} //end random_angle
+
+function draw_new_radius( radius_angle, radius_length, 
+                          x_origin, y_origin, point_label)
+// Function to draw a radius within the CANVAS.
+// Argument line_angle is required.
+// If x_origin and/or y_origin not given, assumed to be
+//   the center of the canvas.
+// point_label is an optional label for the point on the circle
+// No return value
+{
+    //Alert if radius_angle argument is not provided
+    if( radius_angle === undefined )
+    {
+        alert("Error: function draw_new_radius requires the radius angle to be provided.");
+        return;
+    }
+
+    //Alert if radius_length argument is not provided
+    if( radius_length === undefined )
+    {
+        alert("Error: function draw_new_radius requires the radius length to be provided.");
+        return;
+    }
+
+    //Set up origin point for line if not provided
+    if(!x_origin)
+    {
+        var x_origin = Math.floor( C1XMAX / 2);
+    }
+    if(!y_origin)
+    {
+        var y_origin = Math.floor( C1YMAX / 2);
+    }
+
+    //
+    //Intersection point of radius with circle
+    //
+    var x_intersect = x_origin + 
+                      radius_length * Math.cos(radius_angle);
+    var y_intersect = y_origin +
+                      radius_length * Math.sin(radius_angle);
+        
+    //Draw line
+    C1CTX.beginPath();
+    C1CTX.lineWidth = LINE_WIDTH;
+    C1CTX.moveTo( x_origin , y_origin );
+    C1CTX.lineTo( x_intersect , y_intersect );
+    C1CTX.stroke();
+
+    //
+    //Draw point at intersection with circle
+    //
+    C1CTX.beginPath();
+    C1CTX.arc(x_intersect,y_intersect,5,0,2.0*Math.PI,true);
+    C1CTX.fill();
+
+    //Label point if requested
+    if( point_label != undefined )
+    {
+        C1CTX.save(); //save current state of canvas settings
+        C1CTX.font="italic 40px cursive";
+        C1CTX.fillStyle="blue"; 
+        C1CTX.textAlign="center"; 
+        C1CTX.textBaseline="middle"; 
+        var label_dist = 28;
+        var x_label = x_origin + 
+                      radius_length * Math.cos(radius_angle) + 
+                      label_dist*Math.cos(radius_angle);
+        var y_label = y_origin + 
+                      radius_length * Math.sin(radius_angle) + 
+                      label_dist*Math.sin(radius_angle);
+        
+        C1CTX.fillText(point_label, x_label, y_label);
+
+        C1CTX.restore(); //restore previous canvas settings
+
+    }
+
+    return;
+
+} //end draw_new_radius
+
+function draw_random_circle( )
+// Function to draw random circle with diameter and radius.
+{
+
+    //Clear canvases
+    C1CTX.clearRect(0, 0, C1XMAX, C1YMAX);
+    C2CTX.clearRect(0, 0, C2XMAX, C2YMAX);
+
+    //possible point labels
+    var point_labels = new Array("A", "B", "C", "D", "W", "X", "Y", "Z");
+    point_labels = randomize_labels( point_labels );
+
+    //Find an origin point somewhat near center of canvas
+    var x_origin = Math.floor( C1XMAX/2 + 
+             0.3*C1XMAX*(Math.random()-0.5) );
+    var y_origin = Math.floor( C1YMAX/2 + 
+             0.2*C1YMAX*(Math.random()-0.5) );
+
+    //Determine random radius length 
+    //First find shortest distance to edge
+    var radius_max = Math.min( x_origin - 0, 
+                               C1XMAX - x_origin, 
+                               y_origin - 0, 
+                               C1YMAX - y_origin);
+    //Radius can be between 50% and 85% of maximum length
+    var radius_length = radius_max * 
+                        ( 0.35 * Math.random() + 0.50 );
+
+    //Draw the circle
+    C1CTX.beginPath();
+    C1CTX.lineWidth = LINE_WIDTH * 1.5;
+    C1CTX.arc(x_origin,y_origin,radius_length,0,2.0*Math.PI,true);
+    C1CTX.stroke();
+
+    //Draw the origin
+    C1CTX.beginPath();
+    C1CTX.arc(x_origin,y_origin,5,0,2.0*Math.PI,true);
+    C1CTX.fill();
+
+    //Find random angle for diameter
+    var diameter_angle = random_angle( Math.PI );
+
+    //Draw Diameter
+    draw_new_radius(diameter_angle, radius_length, 
+                    x_origin, y_origin, point_labels[1]);
+    draw_new_radius(diameter_angle - Math.PI, radius_length, 
+                    x_origin, y_origin, point_labels[2]);
+
+    //Draw Radius
+    var radius_angle = diameter_angle - 
+                       (0.6 * Math.PI  *Math.random() + 0.2);
+    draw_new_radius(radius_angle, radius_length, 
+                    x_origin, y_origin, point_labels[3]);
+    
+    //Label Origin (perpendicular to diameter, opposite radius)
+    var label_angle = diameter_angle - 0.5*Math.PI;
+    var label_dist = 28;
+    var x_label = x_origin - 
+                  label_dist*Math.cos(label_angle);
+    var y_label = y_origin - 
+                  label_dist*Math.sin(label_angle);
+    C1CTX.save(); //save current state of canvas settings
+    C1CTX.font="italic 40px cursive";
+    C1CTX.fillStyle="blue"; 
+    C1CTX.textAlign="center"; 
+    C1CTX.textBaseline="middle"; 
+    C1CTX.fillText(point_labels[0], x_label, y_label);
+    C1CTX.restore(); //restore previous canvas settings
+
+    //Design Question and Answer
+    var radiusValue = Math.floor((Math.random()*15)+1);
+    var questionValue = radiusValue * 2;
+    // 30% of time give length of diameter in question
+    var questionPoint1Index = 1;
+    var questionPoint2Index = 2;    
+    // 70% of time give length of radius in question
+    if ( Math.random() < 0.7 )
+    {
+        questionValue = radiusValue;
+        questionPoint1Index = 0; // origin of circle
+        questionPoint2Index = Math.floor((Math.random()*3)+1);
+    }
+    //Half the time, switch the two point indices/labels
+    if ( Math.random() < 0.5 )
+    {
+        var tmp = questionPoint1Index;
+        questionPoint1Index = questionPoint2Index;
+        questionPoint2Index = tmp;
+    }
+    //40% of the time, answer will be the radius of circle
+    var answerString = 'radius';
+    var answerValue = radiusValue;
+    //60% of the time, answer will be the diameter of circle
+    if ( Math.random() < 0.6 )
+    {
+        answerString = 'diameter';
+        answerValue = radiusValue * 2;
+    }
+        
+    //Update Question Output
+    C2CTX.save(); //save current state of canvas settings
+    C2CTX.font="30px serif";
+    C2CTX.textAlign="left"; 
+    C2CTX.textBaseline="alphabetic"; 
+
+    var text1 = "If ";
+    var text1start = 10;
+    C2CTX.fillText(text1,text1start,30);
+    var text2 = point_labels[questionPoint1Index] + 
+                point_labels[questionPoint2Index];
+    var text2start = text1start + C2CTX.measureText(text1).width;
+    C2CTX.font="italic 35px cursive"
+    C2CTX.fillText(text2,text2start,30);
+    var text3 = " = " + questionValue + 
+                ", what is the " + answerString + "?";
+    var text3start = text2start + C2CTX.measureText(text2).width;
+    C2CTX.font="30px serif"
+    C2CTX.fillText(text3,text3start,30);
+
+    C2CTX.restore(); //restore previous canvas settings
+
+    //Update Answer String
+    AnswerString = "The circle\'s " + answerString +
+                   " is " + answerValue + ".";
+
+} //end draw_random_circle
+
+function update_answer_box( )
+// Function to update the answer box canvas
+{
+    
+    C2CTX.save(); //save current state of canvas settings
+    C2CTX.font="30px serif";
+    C2CTX.textAlign="left"; 
+    C2CTX.textBaseline="alphabetic"; 
+
+    C2CTX.fillText(AnswerString,10,65);
+
+    C2CTX.restore(); //restore previous canvas settings
+
+} //end update_answer_box
+
+</script>
+
+</body>
+</html>
