@@ -1,6 +1,0 @@
-Might be best to just use one window for the application instead of stretching between more
-        Could use boxes to create connections inside single window with clickable "links" that expand when touched/hovered to show more info
-        See app "Obsidian"
-
-Completely gave up on using Java for cross platform reasons (linux environment is not pretty with Java)
-        This file is saved currently for reference when creating in other langs

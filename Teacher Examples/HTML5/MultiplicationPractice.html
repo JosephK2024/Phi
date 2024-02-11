@@ -1,0 +1,212 @@
+<!doctype html>
+<!-- saved from url=(0049)https://sites.google.com/site/math2share/students -->
+<HTML>
+<HEAD>
+<title>Multiplication Table Practice</title>
+
+</HEAD>
+
+<BODY>
+
+<script language="javascript" type="text/javascript">
+<!--
+//Javascript-based webpage to quiz students with
+//their multiplication facts
+//   
+
+//Global Variables
+var maximumValue = 10;
+var minimumValue = 1;
+var bIncludeNegative = false;
+var factor1 = 0;
+var factor2 = 0;
+
+function change_max_value()
+// Function to change the maximum multiplication value
+{  
+    // Retrieve the maximum number from the pull-down menu
+    var max_num = parseInt(document.getElementById('maxvalue').value);
+
+    // Verify maximum value is more than minimum value
+    if ( max_num <= minimumValue )
+    {
+         document.getElementById('maxvalue').selectedIndex =  
+                 12 - maximumValue;
+         return;
+    }
+
+    // Change the global variable value
+    maximumValue = max_num;
+    
+} //end change_max_value
+
+function change_min_value()
+// Function to change the minimum multiplication value
+{  
+    // Retrieve the minimum number from the pull-down menu
+    var min_num = parseInt(document.getElementById('minvalue').value);
+
+    // Verify minimum value is less than maximum value
+    if ( min_num >= maximumValue )
+    {
+         document.getElementById('minvalue').selectedIndex =  
+                 minimumValue;
+         return;
+    }
+
+    // Change the global variable value
+    minimumValue = min_num;
+    
+} //end change_min_value
+
+function change_signs_value()
+// Function to change if negative values are allowed
+{  
+    // Retrieve the signs value from the pull-down menu
+    var sign_value = document.getElementById('signvalue').value;
+
+    // Change the global variable value
+    if ( sign_value == "Pos" )
+    {
+         bIncludeNegative = false;
+    }
+    else
+    {
+         bIncludeNegative = true;
+    }    
+  } //end change_signs_value
+
+function get_random_sign()
+// Function to randomly generate a positive or negative sign
+// Uses global variable 'bIncludeNegative'
+{
+    
+    if ( bIncludeNegative && ( Math.random() < 0.5 ) )
+    {
+        return -1;
+    }
+    else
+    {
+        return 1;
+    }
+
+} //end gen_random_sign
+
+function get_random_num()
+// Function to randomly generate a random integer
+// Uses global variables 'minimumValue' and 'maximumValue'
+{
+    var ranNum = Math.floor(Math.random()*(maximumValue-minimumValue+1.0))+minimumValue;
+    return ranNum;
+
+} //end gen_random_num
+
+function show_random_question()
+// Function to display randomly generated multiplication problem
+// Uses global variables: 
+{
+    
+    factor1 = get_random_sign() * get_random_num();
+    factor2 = get_random_sign() * get_random_num();
+
+    var factor1string = factor1.toString();
+    //better to use the &minus; instead of default negative sign
+    if ( factor1 < 0 )
+    {
+         factor1string = '&minus;' + Math.abs(factor1);
+    }
+
+    var factor2string = factor2.toString();
+    //better to use the &minus; instead of default negative sign
+    if ( factor2 < 0 )
+    {
+         factor2string = '&minus;' + Math.abs(factor2);
+    }
+    
+    var question = factor1string+' &times; '+factor2string;
+    
+    document.getElementById('question').innerHTML = question;
+
+    //clear out old answer
+    document.getElementById('answer').innerHTML = '';
+
+} //end show_random_question
+
+function show_answer()
+// Function to display answer to multiplication problem
+// Uses global variables: 
+{
+    
+    var product = factor1 * factor2;
+
+    var productstring = product.toString();
+    //better to use the &minus; instead of default negative sign
+    if ( product < 0 )
+    {
+         productstring = '&minus;' + Math.abs(product);
+    }
+    
+    document.getElementById('answer').innerHTML = productstring;
+    
+} //end show_answer
+
+//-->
+</script>
+
+<table style="width:800px;font-size:600%;">
+<tr>
+  <td id="question" style="width:500px;text-align:center"></td>
+  <td style="width:50px;text-align:center"> <b>=</b> </td>
+  <td id="answer" style="width:250px;text-align:center"></td>
+</tr>
+</table>
+
+<br>
+
+<input type="button" value="New Question" onClick="show_random_question();" style="font-size:200%;font-weight:bold;" />
+
+<input type="button" value="Show Answer" onClick="show_answer();" style="font-size:200%;font-weight:bold;" />
+
+<br><br>
+
+<label for="maxvalue" style="font-size:125%;">Maximum Value:</label>
+<select id="maxvalue" onChange="change_max_value();" style="font-size:125%;">
+  <option value="12">12</option>
+  <option value="11">11</option>
+  <option value="10" selected="selected">10</option>
+  <option value="9">9</option>
+  <option value="8">8</option>
+  <option value="7">7</option>
+  <option value="6">6</option>
+  <option value="5">5</option>
+  <option value="4">4</option>
+  <option value="3">3</option>
+  <option value="2">2</option>
+</select>
+
+<label for="signvalue" style="font-size:125%;">Signs:</label>
+<select id="signvalue" onChange="change_signs_value();" style="font-size:125%;">
+  <option value="Pos" selected="selected">Positive Only</option>
+  <option value="PosNeg">Positive and Negative</option>
+</select>
+
+<br>
+
+<label for="minvalue" style="font-size:125%;">Minimum Value:&nbsp;</label>
+<select id="minvalue" onChange="change_min_value();" style="font-size:125%;">
+  <option value="0">0</option>
+  <option value="1" selected="selected">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+</select>
+
+</BODY>
+</HTML>
