@@ -2,17 +2,17 @@
 ## Overview
 > [!NOTE]
 > Following shows pros with (+) and cons with (-)
-####Java
+#### Java
    - Doesn't work multi-platform well (-)
      - No Linux interpereter built in 
      - Crostini doesn't like the Java engine
    - Not limited to single window (+)
-####JavaScript/HTML
+#### JavaScript/HTML
    - Limited mainly to browser implementation (-)
      >Frameworks can fix this however are too many for easy selection
      >ALSO creating HTML code by using JavaScript is tedium incarnate
    - Has easy access to multi-platform  (+)
-####Python 
+#### Python 
    - Has built in Interpereters in Windows and most Linux distros (according to Google; personal Crostini device didn't have it) (+)
    - Not limited to single window (+)
    - Google(and their AI) says it can be easily translated and kept as machine code
@@ -48,7 +48,7 @@
 
     Probably wont use JavaScript for the main 
 
-#Changes
+# Changes
 Decided to mainly focus on finding a way to store and open data locally that has been taken from the Google data. This was thought to be one of my biggest hurdles in using this program but I've easily found where Google stores it's session data through quick websearches.
 Removed Python files as they had nothing of worth inside and were just me messing around
 Reorganized the .md files
