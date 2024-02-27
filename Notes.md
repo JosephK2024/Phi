@@ -71,4 +71,6 @@ Should probably move these into the Project manager Github offers.
 Figured out how Google Re-opens past tabs/where it stores the information
  >C:\Users\User\AppData\Local\Google\Chrome\User Data\Default
  >>On Windows, Other places will be different, mobile probably has a completely different way 
+ >>> [!NOTE]
+ >>> Chromebooks DO NOT have access to this file via their filing system 
  >>[WebArchive/Browser history file location](http://web.archive.org/web/20201202030319/https://www.foxtonforensics.com/browser-history-examiner/chrome-history-location#:~:text=Chrome%20Searches%20are%20stored%20in)
