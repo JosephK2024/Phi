@@ -1,20 +1,26 @@
 # Supplements StartUp.py and readies to be copied to another filespace after StartUp.py finishes, not recomended for public use
 
+# whether this build is meant for the public
+Public = False
+
 import os
 def create_file(filepath, filename):
     try:
         if (os.path.exists(filepath + filename)):
-            cont = input(filepath + filename + " already exists, this will override anything stored in that file, continue?(Y/N): ")
-            if(cont.lower() == 'n'):
-                return
-            elif(cont == '?'):
-                read_file(filename)
-                create_file(filepath, filename)
+            if not(Public):
+                cont = input(filepath + filename + " already exists, this will override anything stored in that file, continue?(Y/N): ")
+                if(cont.lower() == 'n'):
+                    return
+                elif(cont == '?'):
+                    read_file(filename)
+                    create_file(filepath, filename)
+                else:
+                    os.remove( filepath + filename)
             else:
-                os.remove( filepath + filename)
+                print("Error: could not create file " + filepath + filename)
         open(filepath + filename, "a").write('')
     except IOError:
-        print("Error: could not create file " + filename)
+        print("Error: could not create file " + filepath +filename)
 
 
 def read_file(filename):
