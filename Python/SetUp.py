@@ -13,7 +13,7 @@ from file_management import *
 ### SETUP ###
 def setup(filepath):
     print(filepath)
-    filename = "test.txt"
+    filename = "test.py"
     create_file("C:\\Users\\Joseph\\Desktop\\Coed\\Project\\", filename)
     read_file(filename)
     
